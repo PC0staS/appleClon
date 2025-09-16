@@ -23,6 +23,5 @@ export default function Tienda(){
                 <li>Promoción para estudiantes universitarios</li>
             </ul>
         </div>
-        <div></div>
     </div>
 }

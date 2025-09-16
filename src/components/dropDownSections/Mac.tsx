@@ -27,7 +27,6 @@ export default function Mac() {
           <li>Promoción para estudiantes universitarios</li>
         </ul>
       </div>
-      <div></div>
     </div>
   );
 }

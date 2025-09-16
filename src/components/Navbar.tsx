@@ -3,6 +3,14 @@ import { BuscarSvg, CarritoSvg } from "../assets/svg";
 import { motion, AnimatePresence } from "framer-motion";
 import Tienda from "./dropDownSections/Tienda";
 import Mac from "./dropDownSections/Mac";
+import Ipad from "./dropDownSections/Ipad";
+import Iphone from "./dropDownSections/Iphone";
+import Watch from "./dropDownSections/Watch";
+import Airpods from "./dropDownSections/Airpods";
+import TvyCasa from "./dropDownSections/TvyCasa";
+import Entretenimiento from "./dropDownSections/Entretenimiento";
+import Accesorios from "./dropDownSections/Accesorios";
+import Soporte from "./dropDownSections/Soporte";
 
 export default function Navbar() {
   const [active, setActive] = useState<number | null>(null);
@@ -26,14 +34,14 @@ export default function Navbar() {
   const contentSections: { [key: number]: React.ReactNode } = {
     1: <Tienda />,
     2: <Mac />,
-    3: <p>Contenido para iPad</p>,
-    4: <p>Contenido para iPhone</p>,
-    5: <p>Contenido para Watch</p>,
-    6: <p>Contenido para Airpods</p>,
-    7: <p>Contenido para TV y Casa</p>,
-    8: <p>Contenido para Entretenimiento</p>,
-    9: <p>Contenido para Accesorios</p>,
-    10: <p>Contenido para Soporte</p>,
+    3: <Ipad />,
+    4: <Iphone />,
+    5: <Watch />,
+    6: <Airpods />,
+    7: <TvyCasa />,
+    8: <Entretenimiento />,
+    9: <Accesorios />,
+    10: <Soporte />,
   };
 
   // Mostrar el contenido al entrar
@@ -105,7 +113,7 @@ export default function Navbar() {
                 transition={{
                   duration: 0.5,
                   ease: "easeInOut",
-                  layout: { duration: 0.3, ease: "easeInOut" },
+                  layout: { duration: 0.5, ease: "easeInOut" },
                 }}
                 className="absolute left-0 top-full w-screen bg-[#181818] text-gray-400 shadow-lg z-49"
                 onMouseLeave={handleMouseLeave}
@@ -115,7 +123,7 @@ export default function Navbar() {
                   key={active}
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  transition={{ duration: 0.3, ease: "easeInOut" }}
+                  transition={{ duration: 0.5, ease: "easeInOut" }}
                   className="p-4 mx-60"
                 >
                   {contentSections[active]}
