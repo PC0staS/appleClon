@@ -2,6 +2,7 @@ import { useState } from "react";
 import { BuscarSvg, CarritoSvg } from "../assets/svg";
 import { motion, AnimatePresence } from "framer-motion";
 import Tienda from "./dropDownSections/Tienda";
+import Mac from "./dropDownSections/Mac";
 
 export default function Navbar() {
   const [active, setActive] = useState<number | null>(null);
@@ -20,7 +21,7 @@ export default function Navbar() {
   ];
   const contentSections: { [key: number]: React.ReactNode } = {
     1: <Tienda />,
-    2: <p>Contenido para Mac</p>,
+    2: <Mac />,
     3: <p>Contenido para iPad</p>,
     4: <p>Contenido para iPhone</p>,
     5: <p>Contenido para Watch</p>,
@@ -68,33 +69,27 @@ export default function Navbar() {
       <AnimatePresence>
         {active && (
           <motion.div
-            key={active}
-            initial={{ y: -400 }}
-            animate={{ y: 0 }}
-            exit={{ y: -400 }}
+            key="dropdown"
+            initial={{ y: -400, height: 0 }}
+            animate={{ y: 0, height: "auto" }}
+            exit={{ y: -400, height: 0 }}
             transition={{ duration: 0.5, ease: "easeInOut" }}
-            className={`absolute left-0 top-full w-screen bg-[#181818] text-gray-400 shadow-lg`}
+            className="absolute left-0 top-full w-screen bg-[#181818] text-gray-400 shadow-lg"
             onMouseLeave={handleMouseLeave}
+            style={{ overflow: "hidden" }}
           >
-            <motion.div
-              initial={{
-                opacity: 0,
-                clipPath: "polygon(0% 0%, 0% 0%, 0% 100%, 0% 100%)",
-              }}
-              animate={{
-                opacity: 1,
-                clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
-              }}
-              exit={{
-                opacity: 0,
-                clipPath: "polygon(0% 0%, 0% 0%, 0% 100%, 0% 100%)",
-                animationDuration: "0.1s",
-              }}
-              transition={{ delay: 0.3, duration: 0.5, ease: "easeInOut" }}
-              className="p-4 mx-60"
-            >
-              {contentSections[active]}
-            </motion.div>
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={active}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3, ease: "easeInOut" }}
+                className="p-4 mx-60"
+              >
+                {contentSections[active]}
+              </motion.div>
+            </AnimatePresence>
           </motion.div>
         )}
       </AnimatePresence>
