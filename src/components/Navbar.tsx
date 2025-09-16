@@ -81,9 +81,9 @@ export default function Navbar() {
             <AnimatePresence mode="wait">
               <motion.div
                 key={active}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
+                initial={{ opacity: 0, clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)' }}
+                animate={{ opacity: 1, clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)' }}
+                exit={{ opacity: 0, clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)' }}
                 transition={{ duration: 0.3, ease: "easeInOut" }}
                 className="p-4 mx-60"
               >
