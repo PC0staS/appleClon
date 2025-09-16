@@ -1,6 +1,6 @@
 export default function Mac() {
   return (
-    <div className="mt-2 grid grid-cols-3 mb-3">
+    <div className="mt-2 grid grid-cols-3 mb-3 gap-2">
       <div>
         <h3 className="text-sm opacity-65">Explorar el Mac</h3>
         <ul className="mt-2 space-y-2 text-xl font-semibold cursor-pointer text-white">

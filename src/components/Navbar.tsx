@@ -6,6 +6,10 @@ import Mac from "./dropDownSections/Mac";
 
 export default function Navbar() {
   const [active, setActive] = useState<number | null>(null);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [mobileActiveSection, setMobileActiveSection] = useState<number | null>(
+    null
+  );
 
   const navSections = [
     { id: 1, nombre: "Tiendas" },
@@ -42,57 +46,183 @@ export default function Navbar() {
     setActive(null);
   };
 
+  // Funciones para el menú móvil
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen(!mobileMenuOpen);
+    setMobileActiveSection(null);
+  };
+
+  const toggleMobileSection = (id: number) => {
+    setMobileActiveSection(mobileActiveSection === id ? null : id);
+  };
+
   return (
-    <div className="relative w-full">
-      <nav className="sticky top-0 z-50 mx-auto">
-        <ul className="flex justify-center items-center gap-10 bg-[#181818] text-white h-10">
-          <li>
-            <img
-              src="/apple-logo.svg"
-              alt="Apple Logo"
-              className="h-4 cursor-pointer"
-            />
-          </li>
-          {navSections.map((section) => (
-            <li
-              key={section.id}
-              className="cursor-pointer opacity-65 font-light text-[13px]"
-              onMouseEnter={() => handleMouseEnter(section.id)}
-            >
-              {section.nombre}
+    <div>
+      {/* Contenedor para pantallas grandes */}
+      <div className="relative w-full hidden lg:block">
+        <nav className="sticky top-0 z-50 mx-auto">
+          <ul className="flex justify-center items-center gap-10 bg-[#181818] text-white h-10">
+            <li>
+              <img
+                src="/apple-logo.svg"
+                alt="Apple Logo"
+                className="h-4 cursor-pointer"
+              />
             </li>
-          ))}
-          <li>{CarritoSvg}</li>
-          <li>{BuscarSvg}</li>
-        </ul>
-      </nav>
-      <AnimatePresence>
-        {active && (
-          <motion.div
-            key="dropdown"
-            initial={{ y: -400, height: 0 }}
-            animate={{ y: 0, height: "auto" }}
-            exit={{ y: -400, height: 0 }}
-            transition={{ duration: 0.5, ease: "easeInOut" }}
-            className="absolute left-0 top-full w-screen bg-[#181818] text-gray-400 shadow-lg"
-            onMouseLeave={handleMouseLeave}
-            style={{ overflow: "hidden" }}
-          >
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={active}
-                initial={{ opacity: 0, clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)' }}
-                animate={{ opacity: 1, clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)' }}
-                exit={{ opacity: 0, clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)' }}
-                transition={{ duration: 0.3, ease: "easeInOut" }}
-                className="p-4 mx-60"
+            {navSections.map((section) => (
+              <li
+                key={section.id}
+                className="cursor-pointer opacity-65 font-light text-[13px]"
+                onMouseEnter={() => handleMouseEnter(section.id)}
               >
-                {contentSections[active]}
+                {section.nombre}{" "}
+              </li>
+            ))}
+            <li>{CarritoSvg}</li>
+            <li>{BuscarSvg}</li>
+          </ul>
+        </nav>
+        <AnimatePresence>
+          {active && (
+            <>
+              {/* Overlay con blur para el fondo */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3, ease: "easeInOut" }}
+                className="fixed inset-0 backdrop-blur-sm bg-black/20 z-40"
+                onMouseEnter={() => setActive(null)}
+              />
+
+              {/* Menú desplegable */}
+              <motion.div
+                key="dropdown"
+                layout
+                initial={{ y: -400 }}
+                animate={{ y: -1 }}
+                exit={{ y: -400 }}
+                transition={{
+                  duration: 0.5,
+                  ease: "easeInOut",
+                  layout: { duration: 0.3, ease: "easeInOut" },
+                }}
+                className="absolute left-0 top-full w-screen bg-[#181818] text-gray-400 shadow-lg z-49"
+                onMouseLeave={handleMouseLeave}
+                style={{ overflow: "hidden" }}
+              >
+                <motion.div
+                  key={active}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.3, ease: "easeInOut" }}
+                  className="p-4 mx-60"
+                >
+                  {contentSections[active]}
+                </motion.div>
               </motion.div>
-            </AnimatePresence>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            </>
+          )}
+        </AnimatePresence>
+      </div>
+      {/* Contenedor para pantallas pequeñas */}
+      <div className="w-full block lg:hidden">
+        <nav className="sticky top-0 z-50 mx-auto">
+          <ul className="flex justify-between items-center px-4 bg-[#181818] text-white h-10">
+            <li>
+              <img
+                src="/apple-logo.svg"
+                alt="Apple Logo"
+                className="h-4 cursor-pointer"
+              />
+            </li>
+            <div className="flex gap-4 items-center">
+              <li>{BuscarSvg}</li>
+              <li>{CarritoSvg}</li>
+              {/* Botón hamburguesa */}
+              <li>
+                <button
+                  onClick={toggleMobileMenu}
+                  className="flex flex-col justify-center items-center w-6 h-6 cursor-pointer"
+                >
+                  <motion.span
+                    animate={
+                      mobileMenuOpen
+                        ? { rotate: 45, y: 6 }
+                        : { rotate: 0, y: 0 }
+                    }
+                    className="w-4 h-0.5 bg-white mb-1 transition-all"
+                  />
+                  <motion.span
+                    animate={mobileMenuOpen ? { opacity: 0 } : { opacity: 1 }}
+                    className="w-4 h-0.5 bg-white mb-1 transition-all"
+                  />
+                  <motion.span
+                    animate={
+                      mobileMenuOpen
+                        ? { rotate: -45, y: -6 }
+                        : { rotate: 0, y: 0 }
+                    }
+                    className="w-4 h-0.5 bg-white transition-all"
+                  />
+                </button>
+              </li>
+            </div>
+          </ul>
+        </nav>
+
+        {/* Menú desplegable móvil */}
+        <AnimatePresence>
+          {mobileMenuOpen && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+              className="bg-[#181818] text-white overflow-hidden"
+            >
+              <div className="px-4 py-2">
+                {navSections.map((section) => (
+                  <div key={section.id} className="border-b border-gray-700">
+                    <button
+                      onClick={() => toggleMobileSection(section.id)}
+                      className="w-full text-left py-3 text-sm opacity-65 hover:opacity-100 transition-opacity flex justify-between items-center"
+                    >
+                      {section.nombre}
+                      <motion.span
+                        animate={{
+                          rotate: mobileActiveSection === section.id ? 180 : 0,
+                        }}
+                        transition={{ duration: 0.2 }}
+                        className="text-xs"
+                      >
+                        ▼
+                      </motion.span>
+                    </button>
+
+                    {/* Contenido expandible de cada sección */}
+                    <AnimatePresence>
+                      {mobileActiveSection === section.id && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: "auto", opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.3, ease: "easeInOut" }}
+                          className="overflow-hidden bg-[#181818] rounded mb-2"
+                        >
+                          <div className="p-4 text-xs text-gray-400">
+                            {contentSections[section.id]}
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
     </div>
   );
 }
