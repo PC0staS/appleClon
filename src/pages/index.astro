@@ -1,6 +1,16 @@
 ---
 import Navbar from '../components/Navbar.tsx';
+import Iphone17Pro from '../components/Iphone17Pro.astro';
 import Layout from '../layouts/Layout.astro';
+import IphoneAir from '../components/IphoneAir.astro';
+import Iphone17 from '../components/Iphone17.astro';
+import AirpodsGrid from '../components/AirpodsGrid.astro';
+import Watch11 from '../components/Watch11.astro';
+import IpadAir from '../components/IpadAir.astro';
+import TradeIn from '../components/TradeIn.astro';
+import WatchSE from '../components/WatchSE.astro';
+import WatchUltra from '../components/WatchUltra.astro';
+import Footer from '../components/Footer.astro';
 
 // Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
 // Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
@@ -8,4 +18,16 @@ import Layout from '../layouts/Layout.astro';
 
 <Layout>
 	<Navbar client:load />
+	<Iphone17Pro />
+	<IphoneAir />
+	<Iphone17 />
+	<div class="w-full h-auto grid lg:grid-cols-2 grid-cols-1 gap-4 mt-2">
+		<AirpodsGrid />
+		<Watch11 />
+		<WatchSE />
+		<WatchUltra />
+		<IpadAir />
+		<TradeIn />
+	</div>
+	<Footer />
 </Layout>
