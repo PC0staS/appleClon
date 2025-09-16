@@ -111,9 +111,9 @@ export default function Navbar() {
                 animate={{ y: -1 }}
                 exit={{ y: -400 }}
                 transition={{
-                  duration: 0.5,
+                  duration: 0.3,
                   ease: "easeInOut",
-                  layout: { duration: 0.5, ease: "easeInOut" },
+                  layout: { duration: 0.3, ease: "easeInOut" },
                 }}
                 className="absolute left-0 top-full w-screen bg-[#181818] text-gray-400 shadow-lg z-49"
                 onMouseLeave={handleMouseLeave}
