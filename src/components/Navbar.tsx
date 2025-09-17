@@ -144,12 +144,13 @@ export default function Navbar() {
                 className="h-4 cursor-pointer"
               />
             </li>
-            <div className="flex gap-4 items-center">
+            <ul className="flex gap-4 items-center">
               <li>{BuscarSvg}</li>
               <li>{CarritoSvg}</li>
               {/* Botón hamburguesa */}
               <li>
                 <button
+                  aria-label={`Expandir secciones`}
                   onClick={toggleMobileMenu}
                   className="flex flex-col justify-center items-center w-6 h-6 cursor-pointer"
                 >
@@ -175,7 +176,7 @@ export default function Navbar() {
                   />
                 </button>
               </li>
-            </div>
+            </ul>
           </ul>
         </nav>
 
